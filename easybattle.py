@@ -1,3 +1,4 @@
+#各モジュールのimport
 from abc import abstractmethod, ABC
 import random
 import time
@@ -5,22 +6,28 @@ import time
 #Characterクラスを生成
 class Character:
 
+    #初期化メソッドを定義
     def __init__(self, name, sex):
+
         self.__name = name
         self.__sex = sex
 
+    #nameプロパティの設定
     @property
     def name(self):
         return self.__name
 
+    #sexプロパティの設定
     @property
     def sex(self):
         return self.__sex
 
+    #nameセッターの設定
     @name.setter
     def name(self, value):
         self.__name = value
 
+    #sexセッターの設定
     @sex.setter
     def sex(self, value):
         self.__sex = value
@@ -28,7 +35,7 @@ class Character:
     def show_status(self):
         print(f"種別:{self.__class__.kinds} 名前:{self.name} 性別:{self.sex}")
 
-#FightCharacterクラスを生成
+#FightCharacterクラスを生成(Characterクラスを継承、抽象クラスである)
 class FightCharacter(Character, ABC):
 
     def __init__(self, name, sex, hp, atk):
@@ -62,6 +69,7 @@ class FightCharacter(Character, ABC):
 
         self.__atk = value
 
+    #抽象メソッドを定義
     @abstractmethod
     def physicsattack(self):
 
@@ -105,13 +113,11 @@ class Brave(FightCharacter):
 
         print(self.name + random.choice(b_magiclist))
 
-
     def special(self):
 
         b_spelist = ["は特殊な盾を構えた！", "のリフレクター！", "のマジックコート！"]
 
         print(self.name + random.choice(b_spelist))
-
 
     def fall(self):
 
@@ -125,7 +131,7 @@ class Brave(FightCharacter):
 
         print(self.name + random.choice(b_viclist))
 
-#Monsterクラスを生成
+#魔物クラスを生成
 class Monster(FightCharacter):
     kinds = "魔物"
 
@@ -501,6 +507,7 @@ def pvp():
             #魔物の体力を魔物の攻撃力分引く
             m.hp -= b.atk
 
+        #勇者magic vs 魔物physicsの場合
         elif b_act == "魔法" and m_act == "物理攻撃":
 
             #セリフの生成
@@ -529,6 +536,7 @@ def pvp():
             #魔物の体力を勇者の攻撃力の1.5倍分引く
             m.hp -= int(b.atk * 1.5)
 
+        #勇者magic vs 魔物magicの場合
         elif b_act == "魔法" and m_act == "魔法":
 
             #セリフの生成
@@ -548,6 +556,7 @@ def pvp():
 
             print(f"{b.name}と{m.name}の魔法は相殺しあった！")
 
+        #勇者magic vs 魔物specialの場合
         elif b_act == "魔法" and m_act == "吸収":
 
             #セリフの生成
@@ -575,7 +584,8 @@ def pvp():
 
             #魔物の体力を勇者の攻撃力の0.5倍分回復する
             m.hp += int(b.atk * 0.5)
-        
+
+        #勇者special vs 魔物physicsの場合
         elif b_act == "リフレクター" and m_act == "物理攻撃":
 
             #セリフの生成
@@ -604,6 +614,7 @@ def pvp():
             #勇者の体力を魔物の攻撃力分引く
             b.hp -= m.atk
 
+        #勇者special vs 魔物magicの場合
         elif b_act == "リフレクター" and m_act == "魔法":
 
             #セリフの生成
@@ -632,6 +643,7 @@ def pvp():
             #魔物の体力を魔物の攻撃力分の0.5倍分引く
             m.hp -= int(m.atk * 0.5)
 
+        #勇者special vs 魔物specialの場合
         elif b_act == "リフレクター" and m_act == "吸収":
 
             #セリフの生成
